@@ -17,26 +17,25 @@ from html2rst import html2text
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(levelname)s %(message)s',
-                    filename=os.path.join(os.getcwd(), '/tmp/web2sphinx/core.log'),
+                    filename=os.path.join(os.getcwd(), '/tmp/web2sphinx.log'),
                     filemode='w')
-
-URL = "http://support.rightscale.com"
-PAGE_LIST_FILE = 'pages_list.txt'
-HTML_SAVE_DIR = 'html'
-REST_SAVE_DIR = 'rest/root'
 
 
 class Web2SphinxBase(object):
     """
     """
+    URL = ""
+    PAGE_LIST_FILE = 'pages_list.txt'
+    HTML_SAVE_DIR = 'html'
+    REST_SAVE_DIR = 'rest/root'
 
     def __init__(self):
         """
         """
         base_os_path = os.getcwd()
-        self.page_list_File = os.path.join(base_os_path, PAGE_LIST_FILE)
-        self.html_save_dir = os.path.join(base_os_path, HTML_SAVE_DIR)
-        self.rest_save_dir = os.path.join(base_os_path, REST_SAVE_DIR)
+        self.page_list_File = os.path.join(base_os_path, self.PAGE_LIST_FILE)
+        self.html_save_dir = os.path.join(base_os_path, self.HTML_SAVE_DIR)
+        self.rest_save_dir = os.path.join(base_os_path, self.REST_SAVE_DIR)
 
 
     def _html_validate(self, html):
@@ -60,15 +59,15 @@ class Web2SphinxBase(object):
 
 
 
-
-class RightScale2Sphinx(Web2SphinxBase):
+class mindtouch2Sphinx(Web2SphinxBase):
     """
     """
 
-    def __init__(self):
+    def __init__(self, url):
         """
         """
-        self.url_list_api = URL + "/@api/deki/pages"
+        self.url = url
+        self.url_list_api = self.url + "/@api/deki/pages"
 
 
     def _get_page_content(self, elem):
@@ -135,6 +134,17 @@ class RightScale2Sphinx(Web2SphinxBase):
         for page in pages:
             data = self._get_page_content(page)
             self. get_page_content(data[4], data[0], data[2], data[3])
+
+
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == '__main__':
